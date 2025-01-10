@@ -25,10 +25,9 @@ app.get('/', (req, res) => {
     res.render("home");
 });
 
-app.get('/makecampground', async (req, res) => {
-    const createCamp = new Campground({ title: 'My Backyard', price: 100, description: 'cheap camping!', location: 'Mount Pangrango' });
-    await createCamp.save();
-    res.send(createCamp);
+app.get('/campgrounds', async (req, res) => {
+    const campgrounds = await Campground.find({});
+    res.render('campgrounds/index', { campgrounds });
 });
 
 const port = process.env.PORT || 3000;
