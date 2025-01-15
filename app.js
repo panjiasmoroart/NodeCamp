@@ -43,6 +43,7 @@ app.get('/campgrounds/new', (req, res) => {
 });
 
 app.post('/campgrounds', catchAsync(async(req, res, next) => {
+    if (!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
     const campground = new Campground(req.body.campground);
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`);
@@ -70,8 +71,17 @@ app.delete('/campgrounds/:id', catchAsync(async(req, res) => {
     res.redirect(`/campgrounds`);
 }));
 
+// more errors 
+app.all(/(.*)/, (req, res, next) => {
+    // res.send("404!!!!");
+    next(new ExpressError('page not found', 404));
+});
+
+
 app.use((err, req, res, next) => {
-    res.send('error, something went wrong!');
+    // res.send('error, something went wrong!');
+    const { statusCode = 500, message = 'something went wrong' } = err;
+    res.status(statusCode).send(message);
 });
 
 const port = process.env.PORT || 3000;
