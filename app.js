@@ -77,11 +77,13 @@ app.all(/(.*)/, (req, res, next) => {
     next(new ExpressError('page not found', 404));
 });
 
-
 app.use((err, req, res, next) => {
     // res.send('error, something went wrong!');
-    const { statusCode = 500, message = 'something went wrong' } = err;
-    res.status(statusCode).send(message);
+    // const { statusCode = 500, message = 'something went wrong' } = err;
+    // res.status(statusCode).send(message);
+    const { statusCode = 500 } = err;
+    if(!err.message) err.message = 'something went wrong'
+    res.status(statusCode).render('error', { err });
 });
 
 const port = process.env.PORT || 3000;
