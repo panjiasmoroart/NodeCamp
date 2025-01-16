@@ -8,10 +8,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
-const Campground = require('./models/campground');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const { campgroundSchema } = require('./schemas.js');
+const Campground = require('./models/campground');
+const Review = require('./models/review');
 
 const dbUrl = process.env.DB_URL || 'mongodb://172.21.176.1:27017/database_name';
 
@@ -80,6 +81,14 @@ app.delete('/campgrounds/:id', catchAsync(async(req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndDelete(id);
     res.redirect(`/campgrounds`);
+}));
+
+app.post('/campgrounds/:id/reviews', catchAsync(async (req, res) => {
+    const campground = await Campground.findById(req.params.id);
+    const review = new Review(req.body.review);
+    campground.reviews.push(review);
+    await Promise.all([review.save(), campground.save()]);
+    res.redirect(`/campgrounds/${campground._id}`);
 }));
 
 // more errors 
