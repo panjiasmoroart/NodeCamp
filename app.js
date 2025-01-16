@@ -51,7 +51,6 @@ const validateReview = (req, res, next) => {
     }
 }
 
-
 app.get('/', (req, res) => {
     res.render("home");
 });
@@ -101,6 +100,14 @@ app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
     campground.reviews.push(review);
     await Promise.all([review.save(), campground.save()]);
     res.redirect(`/campgrounds/${campground._id}`);
+}));
+
+app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
+    const { id, reviewId } = req.params;
+    // $pull: Operator MongoDB untuk menghapus elemen dari array
+    await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/campgrounds/${id}`);
 }));
 
 // more errors 
