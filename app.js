@@ -8,6 +8,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
+app.use(express.static(path.join(__dirname, 'public')))
 const ExpressError = require('./utils/ExpressError');
 
 const campgrounds = require('./routes/campgrounds');
