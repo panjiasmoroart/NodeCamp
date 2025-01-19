@@ -25,6 +25,7 @@ router.post('/', validateReview, catchAsync(async (req, res) => {
     const review = new Review(req.body.review);
     campground.reviews.push(review);
     await Promise.all([review.save(), campground.save()]);
+    req.flash('success', 'Created new review!');
     res.redirect(`/campgrounds/${campground._id}`);
 }));
 
@@ -33,6 +34,7 @@ router.delete('/:reviewId', catchAsync(async (req, res) => {
     // $pull: Operator MongoDB untuk menghapus elemen dari array
     await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
     await Review.findByIdAndDelete(reviewId);
+    req.flash('success', 'Successfully deleted review');
     res.redirect(`/campgrounds/${id}`);
 }));
 
