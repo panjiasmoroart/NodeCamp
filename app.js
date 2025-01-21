@@ -17,6 +17,7 @@ const User = require('./models/user');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
+const userRoutes = require('./routes/users');
 
 const dbUrl = process.env.DB_URL || 'mongodb://172.21.176.1:27017/database_name';
 
@@ -70,6 +71,7 @@ app.get('/fakeUser', async(req, res) => {
     res.send(newUser);
 });
 
+app.use('/', userRoutes);
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews)
 
