@@ -31,5 +31,4 @@ router.post('/login', passport.authenticate('local', { failureFlash: true, failu
     res.redirect('/campgrounds');
 });
 
-
 module.exports = router;
