@@ -13,7 +13,7 @@ router.post('/register', catchAsync(async (req, res, next) => {
         const { email, username, password } = req.body;
         const user = new User({ email, username });
         const registeredUser = await User.register(user, password);
-        console.log(registeredUser);
+        // console.log(registeredUser);
         req.flash('success', 'Welcome to Yelp Camp!');
         res.redirect('/campgrounds');
     }catch(err) {
@@ -21,5 +21,15 @@ router.post('/register', catchAsync(async (req, res, next) => {
         res.redirect('register');
     }
 }));
+
+router.get('/login', (req, res) => {
+    res.render('users/login');
+});
+
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+    req.flash('success', 'welcome back!');
+    res.redirect('/campgrounds');
+});
+
 
 module.exports = router;
