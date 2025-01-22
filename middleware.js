@@ -22,14 +22,3 @@ module.exports.storeReturnTo = (req, res, next) => {
     next();
 }
 
-// req.path,  req.originalUrl >>> /new /campgrounds/new
-// Session {
-//   cookie: {
-//     path: '/',
-//     _expires: 2025-01-29T07:36:51.817Z,
-//     originalMaxAge: 604799999,
-//     httpOnly: true
-//   },
-//   flash: { error: [ 'You must be signed in first!' ] },
-//   returnTo: '/campgrounds/new'
-// }
