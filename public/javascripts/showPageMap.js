@@ -8,6 +8,7 @@ const map = new maptilersdk.Map({
 });
 
 new maptilersdk.Marker()
+    // centering the map
     .setLngLat(campground.geometry.coordinates)
     .setPopup(
         new maptilersdk.Popup({ offset: 25 })
