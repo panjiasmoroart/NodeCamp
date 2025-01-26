@@ -16,9 +16,9 @@ module.exports.createCampground = async(req, res, next) => {
     // if (!req.body.campground) throw new ExpressError('Invalid Campground Data', 400);
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
     // console.log(geoData);   
-    console.log(geoData.features[0].geometry);
-    res.send("OK!!!");
-    return
+    // console.log(geoData.features[0].geometry);
+    // res.send("OK!!!");
+    // return
     const campground = new Campground(req.body.campground);
     campground.geometry = geoData.features[0].geometry;
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
