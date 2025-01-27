@@ -7,6 +7,7 @@ const map = new maptilersdk.Map({
     zoom: 3
 });
 
+// change cluster size and color
 map.on('load', function () {
     map.addSource('campgrounds', {
         type: 'geojson',
