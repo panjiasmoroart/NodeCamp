@@ -1,4 +1,5 @@
 <% layout('layouts/layout_frontend') %>
+<div id="map" style="width: 100%; height: 500px"></div>
 
 <h1>All Campgrounds</h1>
 <div>
@@ -28,3 +29,10 @@
     </div>
   </div>
 <% } %>
+
+<script>
+  const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+  const campgrounds = { features: <%- JSON.stringify(campgrounds) %>}
+</script>
+<script src="/javascripts/clusterMap.js"></script>
+
