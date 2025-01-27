@@ -87,7 +87,9 @@ map.on('load', function () {
     // the unclustered-point layer, open a popup at
     // the location of the feature, with
     // description HTML from its properties.
+    // basic clustering campgrounds
     map.on('click', 'unclustered-point', function (e) {
+        console.log("UNCLUSTERED POINT CLICKED!!!!");
         const { popUpMarkup } = e.features[0].properties;
         const coordinates = e.features[0].geometry.coordinates.slice();
 
@@ -105,6 +107,7 @@ map.on('load', function () {
     });
 
     map.on('mouseenter', 'clusters', () => {
+        console.log('MOUSING OVER A CLUSTER!!!')
         map.getCanvas().style.cursor = 'pointer';
     });
     map.on('mouseleave', 'clusters', () => {

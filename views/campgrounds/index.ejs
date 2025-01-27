@@ -10,6 +10,7 @@
   <div class="card mb-3">
     <div class="row">
       <div class="col-md-4">
+        <%= campground.images[0].url %>
         <% if(campground.images.length) { %>
           <img src="<%= campground.images[0].url %>" alt="no-image" class="img-fluid">
         <% } else { %>
