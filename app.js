@@ -16,6 +16,7 @@ const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -38,6 +39,9 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(mongoSanitize({
+    replaceWith: '_'
+}))
 
 // configuring session
 const sessionConfig = {
@@ -63,6 +67,9 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
     // console.log(req.session); 
+    // http://localhost:3000/?$gt=panjiasmoro
+    // http://localhost:3000/?$gt=panjiasmoro=skjfldsf
+    console.log(req.query);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
