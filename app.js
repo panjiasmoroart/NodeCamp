@@ -1,6 +1,9 @@
-if (process.env.NODE_ENV !== "production") {
-    require('dotenv').config();
-}
+// if (process.env.NODE_ENV !== "production") {
+//     require('dotenv').config();
+// }
+
+// for production 
+require('dotenv').config();
 
 // console.log(process.env.CLOUDINARY_CLOUD_NAME);
 
