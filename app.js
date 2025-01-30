@@ -20,6 +20,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 const campgrounds = require('./routes/campgrounds');
 const reviews = require('./routes/reviews');
@@ -62,6 +63,9 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(helmet({
+    contentSecurityPolicy: false,
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
@@ -74,7 +78,7 @@ app.use((req, res, next) => {
     // console.log(req.session); 
     // http://localhost:3000/?$gt=panjiasmoro
     // http://localhost:3000/?$gt=panjiasmoro=skjfldsf
-    console.log(req.query);
+    // console.log(req.query);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash('success');
     res.locals.error = req.flash('error');
